@@ -51,4 +51,8 @@ public class NioServer {
             mainReactor.submit(new MainReactor(ssc));
         }
     }
+
+    public static void main(String[] args) {
+        new Thread(new Accepter()).start();
+    }
 }
