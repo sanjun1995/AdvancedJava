@@ -1,8 +1,11 @@
 package com.example.demo.file;
 
+import org.springframework.util.CollectionUtils;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * @author caozhixin
@@ -47,7 +50,38 @@ public class FileStreamWRDemo {
         }
     }
 
-    public static void mergeFile(List<String> inputPaths, String outputPath) throws FileNotFoundException {
+    public static void mergeFile(List<String> inputPaths, String outputPath) throws Exception {
+        Vector<InputStream> inputStreams = new Vector<>();
+        if (CollectionUtils.isEmpty(inputPaths)) {
+            throw new Exception("合并文件路径不能为空");
+        }
 
+        for (String inputPath : inputPaths) {
+            InputStream inputStream = new FileInputStream(inputPath);
+            inputStreams.add(inputStream);
+        }
+
+        SequenceInputStream sequenceInputStream = new SequenceInputStream(inputStreams.elements());
+        BufferedOutputStream bufferedOutputStream = null;
+        try {
+            bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(outputPath));
+            byte[] bytes = new byte[10 * 1024];
+            int len = -1;
+            while ((len = sequenceInputStream.read(bytes)) != -1) {
+                bufferedOutputStream.write(bytes, 0, len);
+                bufferedOutputStream.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bufferedOutputStream != null) {
+                    bufferedOutputStream.close();
+                }
+                sequenceInputStream.close();
+            } catch (IOException e) {
+
+            }
+        }
     }
 }
