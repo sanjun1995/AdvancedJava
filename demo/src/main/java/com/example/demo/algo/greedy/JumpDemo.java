@@ -10,7 +10,8 @@ public class JumpDemo {
             return false;
         }
         int rightmost = 0;
-        for (int i = 0; i < nums.length; i++) {
+        // i <= rightmost 含义 i目前能到达的地方
+        for (int i = 0; i <= rightmost; i++) {
             int temp = i + nums[i];
             rightmost = Math.max(rightmost, temp);
             if (rightmost >= nums.length - 1) {
