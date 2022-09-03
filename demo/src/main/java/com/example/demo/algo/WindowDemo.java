@@ -1,5 +1,6 @@
 package com.example.demo.algo;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -8,7 +9,12 @@ import java.util.PriorityQueue;
  * @date 2022/9/3 12:06 PM
  */
 public class WindowDemo {
-    public int[] maxSlidingWindow(int[] nums, int k) {
+    public static void main(String[] args) {
+        int[] nums = new int[]{1, 3, -1, -3, 5, 3, 6, 7};
+        int k = 3;
+        System.out.println(Arrays.toString(maxSlidingWindow(nums, k)));
+    }
+    public static int[] maxSlidingWindow(int[] nums, int k) {
         int n = nums.length;
         // 优先级比较，比较值，相等的话，比较下标
         PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
