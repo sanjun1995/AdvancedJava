@@ -16,9 +16,11 @@ public class TwoSumDemo {
         int n = nums.length;
         Arrays.sort(nums);
         List<List<Integer>> ans = new ArrayList<>();
-        // 枚举a
         for (int first = 0; first < n; ++first) {
-            // 需要和上一次枚举的数不同
+            // 需要和上一次枚举的数不相同
+            if (first > 0 && nums[first] == nums[first - 1]) {
+                continue;
+            }
         }
         return null;
     }
