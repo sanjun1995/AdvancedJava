@@ -13,28 +13,50 @@ public class WindowDemo {
         System.out.println(Arrays.toString(maxSlidingWindow(nums, k)));
     }
     public static int[] maxSlidingWindow(int[] nums, int k) {
-        if (nums == null || nums.length < 2) {
-            return nums;
+        int n = nums.length;
+        Deque<Integer> deque = new LinkedList<>();
+        for (int i = 0; i < k; i++) {
+            while (!deque.isEmpty() && nums[i] >= nums[deque.peekLast()]) {
+                deque.pollLast();
+            }
+            deque.offerLast(i);
         }
-        LinkedList<Integer> queue = new LinkedList<>();
-        int[] result = new int[nums.length - k + 1];
-        for (int i = 0; i < nums.length; i++) {
-            // 保证从大到小 如果前面数小则需要依次弹出，直至满足要求
-            while(!queue.isEmpty() && nums[queue.peekLast()] <= nums[i]) {
-                queue.pollLast();
+        int[] ans = new int[n - k  + 1];
+        ans[0] = nums[deque.peekFirst()];
+        for (int i = k; i < n; i++) {
+            while (!deque.isEmpty() && nums[i] >= nums[deque.peekLast()]) {
+                deque.pollLast();
             }
-            // 添加当前值对应的数组下标
-            queue.addLast(i);
-            // 判断当前队列中队首的值是否有效
-            if (queue.peek() <= i - k) {
-                queue.poll();
+            deque.offerLast(i);
+            // 连续递减时，deque必定会多起来，需要将队首去掉
+            while (deque.peekFirst() <= i - k) {
+                deque.pollFirst();
             }
-            // 当窗口长度为k时，保存当前窗口中最大值
-            if (i + 1 >= k) {
-                result[i + 1 - k] = nums[queue.peek()];
-            }
+            ans[i - k + 1] = nums[deque.peekFirst()];
         }
-        return result;
+        return ans;
+//        if (nums == null || nums.length < 2) {
+//            return nums;
+//        }
+//        LinkedList<Integer> queue = new LinkedList<>();
+//        int[] result = new int[nums.length - k + 1];
+//        for (int i = 0; i < nums.length; i++) {
+//            // 保证从大到小 如果前面数小则需要依次弹出，直至满足要求
+//            while(!queue.isEmpty() && nums[queue.peekLast()] <= nums[i]) {
+//                queue.pollLast();
+//            }
+//            // 添加当前值对应的数组下标
+//            queue.addLast(i);
+//            // 把队首第一个元素去了
+//            if (queue.peek() <= i - k) {
+//                queue.poll();
+//            }
+//            // 当窗口长度为k时，保存当前窗口中最大值
+//            if (i + 1 >= k) {
+//                result[i + 1 - k] = nums[queue.peek()];
+//            }
+//        }
+//        return result;
 //        int n = nums.length;
 //        // 优先级比较，比较值，相等的话，比较下标
 //        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
