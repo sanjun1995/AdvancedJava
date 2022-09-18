@@ -1,8 +1,6 @@
 package com.example.demo.algo;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * @author caozhixin
@@ -15,28 +13,50 @@ public class WindowDemo {
         System.out.println(Arrays.toString(maxSlidingWindow(nums, k)));
     }
     public static int[] maxSlidingWindow(int[] nums, int k) {
-        int n = nums.length;
-        // 优先级比较，比较值，相等的话，比较下标
-        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
-            @Override
-            public int compare(int[] o1, int[] o2) {
-                return o1[0] != o2[0] ? o2[0] - o1[0] : o2[1] -o1[1];
-            }
-        });
-        for (int i = 0; i < k; i++) {
-            pq.offer(new int[]{nums[i], i});
+        if (nums == null || nums.length < 2) {
+            return nums;
         }
-        // 储存答案
-        int[] ans = new int[n - k + 1];
-        ans[0] = pq.peek()[0];
-        for (int i = k; i < n; i++) {
-            // 加入大顶堆
-            pq.offer(new int[]{nums[i], i});
-            while (pq.peek()[1] <= i - k) {
-                pq.poll();
+        LinkedList<Integer> queue = new LinkedList<>();
+        int[] result = new int[nums.length - k + 1];
+        for (int i = 0; i < nums.length; i++) {
+            // 保证从大到小 如果前面数小则需要依次弹出，直至满足要求
+            while(!queue.isEmpty() && nums[queue.peekLast()] <= nums[i]) {
+                queue.pollLast();
             }
-            ans[i - k + 1] = pq.peek()[0];
+            // 添加当前值对应的数组下标
+            queue.addLast(i);
+            // 判断当前队列中队首的值是否有效
+            if (queue.peek() <= i - k) {
+                queue.poll();
+            }
+            // 当窗口长度为k时，保存当前窗口中最大值
+            if (i + 1 >= k) {
+                result[i + 1 - k] = nums[queue.peek()];
+            }
         }
-        return ans;
+        return result;
+//        int n = nums.length;
+//        // 优先级比较，比较值，相等的话，比较下标
+//        PriorityQueue<int[]> pq = new PriorityQueue<>(new Comparator<int[]>() {
+//            @Override
+//            public int compare(int[] o1, int[] o2) {
+//                return o1[0] != o2[0] ? o2[0] - o1[0] : o2[1] -o1[1];
+//            }
+//        });
+//        for (int i = 0; i < k; i++) {
+//            pq.offer(new int[]{nums[i], i});
+//        }
+//        // 储存答案
+//        int[] ans = new int[n - k + 1];
+//        ans[0] = pq.peek()[0];
+//        for (int i = k; i < n; i++) {
+//            // 加入大顶堆
+//            pq.offer(new int[]{nums[i], i});
+//            while (pq.peek()[1] <= i - k) {
+//                pq.poll();
+//            }
+//            ans[i - k + 1] = pq.peek()[0];
+//        }
+//        return ans;
     }
 }
