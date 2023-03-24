@@ -25,11 +25,14 @@ public class NioServer {
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         while (true) {
             // 阻塞等待事件
-            selector.select();
+            selector.select(10);
+            System.out.println("1111");
             // 获取事件
             Set<SelectionKey> selectionKeys = selector.selectedKeys();
+            System.out.println("44444");
             // 处理事件
             for (SelectionKey selectionKey : selectionKeys) {
+                System.out.println("33333");
                 if (selectionKey.isAcceptable()) {
                     // 处理连接事件
                     ServerSocketChannel serverChannel = (ServerSocketChannel) selectionKey.channel();
@@ -58,6 +61,7 @@ public class NioServer {
                         selectionKey.cancel();
                         socketChannel.close();
                     } else {
+                        System.out.println("22222");
                         // 读取到0字节，忽略
                     }
                 }
