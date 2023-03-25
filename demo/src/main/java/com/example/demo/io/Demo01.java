@@ -1,7 +1,5 @@
 package com.example.demo.io;
-
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * @author caozhixin
@@ -10,12 +8,15 @@ import java.io.IOException;
 public class Demo01 {
     public static void main(String[] args) {
         try {
-            FileInputStream fis = new FileInputStream("/Users/caozhixin/IdeaProjects/AdvancedJava/demo/src/main/resources/input.txt");
-            int c;
-            while ((c = fis.read()) != -1) {
-                System.out.print((char) c);
-            }
-            fis.close();
+            String fileName = "/Users/caozhixin/IdeaProjects/AdvancedJava/demo/src/main/resources/input.txt";
+            DataInputStream dataInputStream = new DataInputStream(new FileInputStream(fileName));
+            dataInputStream.readUTF();
+//            byte[] buffer = new byte[1024];
+//            int len;
+//            while ((len = dataInputStream.readUTF()) != -1) {
+//                System.out.println(new String(buffer, 0, len));
+//            }
+            dataInputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

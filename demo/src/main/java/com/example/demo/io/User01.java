@@ -10,11 +10,11 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class User implements Serializable {
+public class User01 implements Serializable {
     private long id;
     private String name;
-    public User() {}
-    public User(long id, String name) {
+    public User01() {}
+    public User01(long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -39,18 +39,18 @@ public class User implements Serializable {
         return baos.toByteArray();
     }
     // 从字节数组反序列化
-    public static User deserialize(byte[] bytes) throws IOException {
+    public static User01 deserialize(byte[] bytes) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         Hessian2Input hessian2Input = new Hessian2Input(bais);
-        return (User) hessian2Input.readObject();
+        return (User01) hessian2Input.readObject();
     }
 
     public static void main(String[] args) throws IOException {
-        User user = new User(1L, "Tom");
+        User01 user = new User01(1L, "Tom");
         byte[] bytes = user.serialize();
         System.out.println(bytes.length);
         System.out.println("序列化后的字节数组：" + Arrays.toString(bytes));
-        User newUser = User.deserialize(bytes);
+        User01 newUser = User01.deserialize(bytes);
         System.out.println("反序列化后的对象：" + new Gson().toJson(newUser));
     }
 }
