@@ -1,5 +1,6 @@
 package com.example.demo.io;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author caozhixin
@@ -7,16 +8,17 @@ import java.io.*;
  */
 public class Demo01 {
     public static void main(String[] args) {
-        try {
-            String fileName = "/Users/caozhixin/IdeaProjects/AdvancedJava/demo/src/main/resources/input.txt";
-            DataInputStream dataInputStream = new DataInputStream(new FileInputStream(fileName));
-            dataInputStream.readUTF();
-//            byte[] buffer = new byte[1024];
-//            int len;
-//            while ((len = dataInputStream.readUTF()) != -1) {
-//                System.out.println(new String(buffer, 0, len));
-//            }
-            dataInputStream.close();
+        String fileName = "demo/src/main/resources/input.txt";
+        try (FileOutputStream outputStream = new FileOutputStream(fileName);
+             FileInputStream inputStream = new FileInputStream(fileName)) {
+            // 写入
+            byte[] words = "Hello World!!!".getBytes(StandardCharsets.UTF_8);
+            outputStream.write(words);
+            // 读取
+            int word;
+            while ((word = inputStream.read()) != -1) {
+                System.out.print((char) word);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
