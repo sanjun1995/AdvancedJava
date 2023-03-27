@@ -12,7 +12,7 @@ public class Demo03 {
     public static void main(String[] args) {
         String fileName = "demo/src/main/resources/input.txt";
         try (InputStream inputStream = new FileInputStream(fileName)) {
-            byte[] buffer = new byte[8192]; // 定义缓冲区
+            byte[] buffer = new byte[1024]; // 定义缓冲区
             int length; // 记录已读取的数据长度
             while ((length = inputStream.read(buffer)) != -1) {
                 System.out.println(new String(buffer, 0, length));
