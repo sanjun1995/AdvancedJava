@@ -23,8 +23,8 @@ public class Server {
                     sb.append(new String(buffer, 0, len, "UTF-8"));
                 }
                 System.out.println("接收到客户端消息：" + sb);
-                inputStream.close();
-                socket.close();
+//                inputStream.close();
+//                socket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -29,7 +29,9 @@ public class NonBlockingServer {
             try {
                 while (true) {
                     // 通过Selector检查就绪的通道
-                    selector.select();
+//                    selector.select();
+                    selector.selectNow();
+                    System.out.println("check");
                     // 获取就绪的SelectionKey集合
                     Set<SelectionKey> keys = selector.selectedKeys();
                     // 遍历就绪的SelectionKey集合，处理每个就绪的通道
