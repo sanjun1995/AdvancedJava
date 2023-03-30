@@ -31,4 +31,12 @@ public class RpcServer {
             executor.submit(new RpcHandler(socket, serviceMap));
         }
     }
+
+    public static void main(String[] args) throws IOException {
+        // 创建服务提供者并注册服务
+        RpcServer server = new RpcServer();
+        server.addService("HelloService", new HelloServiceImpl());
+        // 启动服务，监听端口
+        server.start(8888);
+    }
 }

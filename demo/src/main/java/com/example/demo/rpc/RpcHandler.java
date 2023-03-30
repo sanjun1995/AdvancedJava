@@ -44,6 +44,7 @@ public class RpcHandler implements Runnable {
             Object result = method.invoke(serviceImpl, parameters);
             // 将结果写入输出流中，返回给客户端
             out.writeUTF(result.toString());
+            out.flush();
             // 关闭流和Socket连接
             in.close();
             out.close();
