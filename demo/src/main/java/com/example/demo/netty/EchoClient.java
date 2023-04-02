@@ -8,6 +8,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.CharsetUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -54,30 +56,8 @@ public class EchoClient {
                 if (line == null || "quit".equalsIgnoreCase(line)) { // 如果输入为空或是"quit"，则退出循环
                     break;
                 }
-                ChannelFuture channelFuture = channel.writeAndFlush(line);
-                ChannelPromise promise = channelFuture.channel().newPromise();
-                channelFuture.addListener(new ChannelFutureListener() {
-                    @Override
-                    public void operationComplete(ChannelFuture future) throws Exception {
-                        if (future.isSuccess()) {
-                            // 消息发送成功，等待接收响应
-                            channel.read(); // 触发 channelRead() 方法
-                            // 等待响应结果
-                            promise.await();
-                            // 处理响应结果
-                            if (promise.isSuccess()) {
-                                Object response = promise.get();
-                                // 处理响应结果
-                            } else {
-                                Throwable cause = promise.cause();
-                                // 处理异常情况
-                            }
-                        } else {
-                            Throwable cause = future.cause();
-                            // 处理异常情况
-                        }
-                    }
-                });
+                ByteBuf data = Unpooled.copiedBuffer(line, CharsetUtil.UTF_8);
+                channel.writeAndFlush(data);
             }
             future.channel().closeFuture().sync(); // 等待通道关闭
             System.out.println("client close");
@@ -94,10 +74,13 @@ public class EchoClient {
 }
 // EchoClientHandler类，用于处理客户端的输入输出
 class EchoClientHandler extends ChannelInboundHandlerAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(EchoClientHandler.class);
     // 读取通道中的消息并输出
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println((String) msg);
+        ByteBuf data = (ByteBuf) msg;
+        String message = data.toString(CharsetUtil.UTF_8);
+        logger.info("Client received: {}", message);
     }
     // 处理异常并关闭通道
     @Override

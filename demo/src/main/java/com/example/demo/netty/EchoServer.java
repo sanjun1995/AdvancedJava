@@ -1,5 +1,6 @@
 package com.example.demo.netty;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -9,6 +10,8 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.ChannelHandlerContext;
 import java.net.InetSocketAddress;
+
+import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 public class EchoServer {
@@ -61,13 +64,16 @@ class EchoServerHandler extends ChannelInboundHandlerAdapter {
     // 处理读事件
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        logger.info("Server received: {}", msg);
-        ctx.write(msg); // 将消息写回客户端
+        ByteBuf data = (ByteBuf) msg;
+        String message = data.toString(CharsetUtil.UTF_8);
+        logger.info("Server received: {}", message);
+        // 将消息写回客户端并立即刷新缓冲区
+        ctx.writeAndFlush(data);
     }
     // 读事件读取完成后的处理
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        System.out.println("channelReadComplete");
+        logger.info("channelReadComplete");
         ctx.flush(); // 刷新缓冲区
     }
     // 处理异常事件
