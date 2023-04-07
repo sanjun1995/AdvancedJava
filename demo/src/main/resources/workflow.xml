@@ -1,0 +1,14 @@
+<workflow name="MyWorkflow" desc="This is a sample workflow">
+    <tasks>
+        <task name="TaskA" desc="This is Task A" class="com.example.demo.flow.workflow.TaskA" method="execute"/>
+        <task name="TaskB" desc="This is Task B" class="com.example.demo.flow.workflow.TaskB" method="execute"/>
+        <task name="TaskC" desc="This is Task C" class="com.example.demo.flow.workflow.TaskC" method="execute"/>
+        <task name="TaskD" desc="This is Task D" class="com.example.demo.flow.workflow.TaskD" method="execute"/>
+    </tasks>
+    <routes>
+        <route from="TaskA" to="TaskB"/>
+        <route from="TaskA" to="TaskC"/>
+        <route from="TaskB" to="TaskD"/>
+        <route from="TaskC" to="TaskD"/>
+    </routes>
+</workflow>
