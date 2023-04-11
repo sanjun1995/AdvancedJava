@@ -61,7 +61,8 @@ class Consumer implements Runnable {
                 }
                 int num = queue.remove();
                 System.out.println("Consumer consumes: " + num);
-                queue.notify(); // 唤醒等待的线程
+                // 唤醒等待的线程
+                queue.notify();
             }
         }
     }
