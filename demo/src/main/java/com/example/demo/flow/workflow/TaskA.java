@@ -7,20 +7,10 @@ import lombok.Data;
  * @date 2023/4/7 15:25
  */
 @Data
-public class TaskA extends Task {
+public class TaskA {
     private String name = "TaskA";
     private String className = this.getClass().getName();
     private String methodName = "execute";
-
-    public TaskA() {
-        super();
-
-    }
-
-    public TaskA(String name, String className, String methodName) {
-        super(name, className, methodName);
-    }
-
 
     public String getName() {
         return name;

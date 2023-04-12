@@ -97,50 +97,6 @@ public class WorkflowEngine {
                 }
             }
         }
-
-        /*
-         * 并行执行起始任务列表
-         *
-         * 这里假设所有入度为0的任务都可以作为起始任务，并且它们在并行执行时是相互独立的。
-         */
-        for (String name : inDegree.keySet()) {
-            if (inDegree.get(name) == 0) {
-                Task task = tasks.get(name);
-                System.out.println("Starting parallel execution of tasks from: " + task.getName());
-
-                List<Task> taskList = new ArrayList<>();
-
-                List<Task> nextTaskList = nextTasks.getOrDefault(name, new ArrayList<>());
-                for (Task nextTask : nextTaskList) {
-                    int count = inDegree.compute(nextTask.getName(), (k, v) -> v - 1);
-                    if (count == 0) {
-                        taskList.add(nextTask);
-                    }
-                }
-
-                // 执行起始任务
-                System.out.println("Executing task: " + task.getName());
-                task.execute();
-
-                // 并行执行后续任务
-                for (Task t : taskList) {
-                    System.out.println("Starting task: " + t.getName());
-                    new Thread(() -> {
-                        t.execute();
-                        List<Task> nextTaskList2 = nextTasks.getOrDefault(t.getName(), new ArrayList<>());
-                        for (Task nextTask : nextTaskList2) {
-                            int count = inDegree.compute(nextTask.getName(), (k, v) -> v - 1);
-                            if (count == 0) {
-                                System.out.println("Starting task: " + nextTask.getName());
-                                new Thread(() -> {
-                                    nextTask.execute();
-                                }).start();
-                            }
-                        }
-                    }).start();
-                }
-            }
-        }
     }
 
     public static void main(String[] args) throws Exception {
