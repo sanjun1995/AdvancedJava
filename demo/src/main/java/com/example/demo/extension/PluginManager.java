@@ -83,7 +83,7 @@ public class PluginManager {
 
         private byte[] readClassBytesFromDatabase() {
             // 由于编译问题，.class文件生成在别的路径下，所以这里强行指定一下
-            String name = "/Users/caozhixin/IdeaProjects/AdvancedJava/BusinessExtension.class";
+            String name = "/Users/xxxxx/IdeaProjects/AdvancedJava/BusinessExtension.class";
             Path path = Paths.get(name);
             try {
                 return Files.readAllBytes(path);
