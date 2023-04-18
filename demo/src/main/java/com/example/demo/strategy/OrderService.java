@@ -9,6 +9,9 @@ public class OrderService {
     private PaymentStrategyFactory paymentStrategyFactory;
 
     public void payOrder(Integer payType, double amount) {
+        /**
+         * 获取支付渠道
+         */
         PaymentStrategy paymentStrategy = paymentStrategyFactory.getPaymentStrategy(payType);
         paymentStrategy.pay(amount);
     }

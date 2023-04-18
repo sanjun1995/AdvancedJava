@@ -10,11 +10,18 @@ import java.util.Map;
 
 @Component
 public class PaymentStrategyFactory implements InitializingBean {
+    /**
+     * 通过注解直接将所有PaymentStrategy组件注入到list中
+     */
     @Autowired
     private List<PaymentStrategy> paymentStrategies;
 
     Map<Integer, PaymentStrategy> paymentStrategyMap = new HashMap<>();
 
+    /**
+     * 构建payType为key的paymentStrategyMap
+     * @throws Exception
+     */
     @Override
     public void afterPropertiesSet() throws Exception {
         for (PaymentStrategy paymentStrategy : paymentStrategies) {
@@ -23,6 +30,11 @@ public class PaymentStrategyFactory implements InitializingBean {
         }
     }
 
+    /**
+     * 获取具体的实现类
+     * @param payType
+     * @return
+     */
     public PaymentStrategy getPaymentStrategy(Integer payType) {
         return paymentStrategyMap.get(payType);
     }
