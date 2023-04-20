@@ -65,4 +65,3 @@ class MyClassLoader extends ClassLoader {
         return byteStream.toByteArray();
     }
 }
-
