@@ -143,6 +143,11 @@
             <artifactId>jedis</artifactId>
             <version>3.6.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>9.5</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
