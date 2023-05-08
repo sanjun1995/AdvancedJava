@@ -59,6 +59,7 @@ public class MyClassTransformer implements ClassFileTransformer {
                         public void visitLineNumber(int line, Label start) {
                             // 对visitLineNumber方法进行访问，在访问方法中插入方法调用指令
                             if (tryCatchBlockHandlers.contains(start)) {
+                                // 当该行代码处于try-catch块中时，在该行代码前插入方法调用指令
                                 mv.visitMethodInsn(INVOKESTATIC, OWNER, "logStackTrace", "(Ljava/lang/Throwable;)V", false);
                             }
                             super.visitLineNumber(line, start);
