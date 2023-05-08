@@ -31,18 +31,41 @@ public class MyClassTransformer implements ClassFileTransformer {
         try {
             ClassReader cr = new ClassReader(className);
             ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-            ClassVisitor cv = new ClassVisitor(Opcodes.ASM7, cw) {
+            ClassVisitor cv = new ClassVisitor(Opcodes.ASM8, cw) {
                 @Override
                 public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
                     MethodVisitor mv = super.visitMethod(access, name, descriptor, signature, exceptions);
-                    return new MethodVisitor(Opcodes.ASM5, mv) {
+                    return new MethodVisitor(Opcodes.ASM8, mv) {
+                        private Label startLabel = new Label();
+                        private Label endLabel = new Label();
+
                         @Override
-                        public void visitTryCatchBlock(Label start, Label end, Label handler, String type) {
-                            super.visitTryCatchBlock(start, end, handler, type);
-                            // 替换原来的异常处理代码
-                            mv.visitLabel(handler);
+                        public void visitCode() {
+                            super.visitCode();
+                            Label tryStart = new Label();
+                            Label tryEnd = new Label();
+                            Label catchHandler = new Label();
+                            mv.visitTryCatchBlock(tryStart, tryEnd, catchHandler, "java/lang/Throwable");
+                            mv.visitLabel(tryStart);
+                        }
+
+                        @Override
+                        public void visitMaxs(int maxStack, int maxLocals) {
+                            mv.visitLabel(endLabel);
+                            mv.visitInsn(RETURN);
+
+                            Label catchHandler = new Label();
+                            mv.visitLabel(catchHandler);
+                            mv.visitVarInsn(ASTORE, 1);
+                            mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
                             mv.visitLdcInsn("Exception caught:");
+                            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+                            mv.visitVarInsn(ALOAD, 1);
                             mv.visitMethodInsn(INVOKESTATIC, OWNER, "logStackTrace", "(Ljava/lang/Throwable;)V", false);
+                            mv.visitInsn(ATHROW); // throw the caught exception
+
+                            mv.visitTryCatchBlock(startLabel, endLabel, catchHandler, "java/lang/Throwable");
+                            super.visitMaxs(maxStack, maxLocals);
                         }
                     };
                 }
@@ -57,8 +80,9 @@ public class MyClassTransformer implements ClassFileTransformer {
 
     // 定义方法
     public static void logStackTrace(Throwable throwable) {
-        System.out.println(throwable);
+        throwable.printStackTrace(System.out);
     }
+
 
     private boolean needEnhance(String className) {
         for (String basePackage : basePackages) {
