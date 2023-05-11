@@ -15,7 +15,7 @@ public class AttachDemo {
         }
 
         // 选择一个Java进程，通过进程ID（PID）附加到该进程
-        String pid = "42321"; // 目标进程的PID
+        String pid = "42765"; // 目标进程的PID
         VirtualMachine vm = VirtualMachine.attach(pid);
 
         // 启动调试会话，并连接到JDWP服务端口
