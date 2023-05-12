@@ -1,5 +1,6 @@
 package com.example.demo.design.chain;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -7,10 +8,16 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+@Data
 public class HandlerExecutor implements CommandLineRunner {
 
     @Autowired
     private List<ChainHandler> chainHandlers;
+
+    private ChainHandler chainHandler;
+
+    @Autowired
+    private RequestProcess process;
 
     /**
      * 构建处理器链
@@ -32,10 +39,9 @@ public class HandlerExecutor implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // 初始化处理器链
-        ChainHandler headChainHandler = this.buildHandlerChain();
-//        headHandlerChain.handle(request, response);
-        Request request = new Request("Hello world!");
-        headChainHandler.handle(request);
+        // 构建责任链
+        chainHandler = this.buildHandlerChain();
+        // 执行某个方法（带Chain注解）
+        process.process("Hello world!");
     }
 }
