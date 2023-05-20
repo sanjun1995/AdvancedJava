@@ -15,8 +15,10 @@ import java.util.List;
 @Component
 public class ChainHandlerAspect implements InitializingBean {
     @Autowired
+    // 注入所有实现ChainHandler接口的责任链处理器
     private List<ChainHandler> chainHandlers;
 
+    // 责任链的头节点
     private ChainHandler chainHandler;
 
     @Around("@annotation(com.example.demo.design.chain.MyChain)")
