@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 public class ComponentRunner implements CommandLineRunner {
 
     @Autowired
-    private RequestProcess process;
+    private BizComponent bizComponent;
 
     @Override
     public void run(String... args) throws Exception {
         // 执行某个方法（带Chain注解）
-        process.process("Hello world!");
+        bizComponent.process("Hello world!");
     }
 }
