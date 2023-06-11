@@ -15,11 +15,9 @@ public class Client {
                 String message = "hello, server1!";
                 outputStream.write(message.getBytes("UTF-8"));
                 outputStream.flush();
-                Thread.sleep(1000000L);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Thread.sleep(100);
         }
     }
 }
