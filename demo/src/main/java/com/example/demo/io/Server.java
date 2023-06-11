@@ -21,10 +21,11 @@ public class Server {
                 StringBuilder sb = new StringBuilder();
                 while ((len = inputStream.read(buffer)) != -1) {
                     sb.append(new String(buffer, 0, len, "UTF-8"));
+                    System.out.println("数据已经到达");
                 }
                 System.out.println("接收到客户端消息：" + sb);
-//                inputStream.close();
-//                socket.close();
+                inputStream.close();
+                socket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();

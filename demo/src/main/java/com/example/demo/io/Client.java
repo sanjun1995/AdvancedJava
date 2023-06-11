@@ -8,14 +8,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 public class Client {
-    public static void main(String[] args) {
-        try (Socket socket = new Socket("localhost", 8888);
-             OutputStream outputStream = socket.getOutputStream()) {
-            String message = "hello, server1!";
-            outputStream.write(message.getBytes("UTF-8"));
-            outputStream.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static void main(String[] args) throws InterruptedException {
+        while (true) {
+            try (Socket socket = new Socket("localhost", 8888);
+                 OutputStream outputStream = socket.getOutputStream()) {
+                String message = "hello, server1!";
+                outputStream.write(message.getBytes("UTF-8"));
+                outputStream.flush();
+                Thread.sleep(1000000L);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Thread.sleep(100);
         }
     }
 }
