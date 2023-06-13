@@ -1,9 +1,9 @@
 package com.example.demo.concurrent;
 
-import java.util.concurrent.locks.LockSupport;
+import java.util.concurrent.locks.*;
 
 public class LockSupportDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Thread thread = new Thread(() -> {
             System.out.println("Thread started");
             LockSupport.park(); // 线程阻塞
@@ -12,6 +12,7 @@ public class LockSupportDemo {
 
         thread.start();
         System.out.println("Main thread sleeping");
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
