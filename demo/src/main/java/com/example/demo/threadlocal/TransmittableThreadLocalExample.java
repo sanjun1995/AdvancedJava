@@ -10,7 +10,7 @@ public class TransmittableThreadLocalExample {
 
     public static void main(String[] args) {
         // 创建一个线程池
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        ExecutorService executorService = Executors.newFixedThreadPool(1);
 
         // 设置TransmittableThreadLocal的值
         context.set("Hello, World!");
@@ -20,6 +20,8 @@ public class TransmittableThreadLocalExample {
             // 在任务中获取TransmittableThreadLocal的值
             System.out.println("Task 1: " + context.get());
         });
+
+        context.set("Hello");
 
         executorService.submit(() -> {
             // 在任务中获取TransmittableThreadLocal的值

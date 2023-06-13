@@ -7,6 +7,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * https://juejin.cn/post/7118772191251922952
+ * TransmittableThreadLocal解决线程池本地变量问题
+ */
+
 public class TTLExecutorExample {
     private static ExecutorService TTLExecutor = TtlExecutors.getTtlExecutorService(Executors.newFixedThreadPool(5));
 
