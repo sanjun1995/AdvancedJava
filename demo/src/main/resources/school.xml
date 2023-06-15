@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<school>
+    <classes>
+        <class className="classOne">
+            <student>
+                <no>1</no>
+                <name>小张</name>
+                <age>24</age>
+            </student>
+            <student>
+                <no>2</no>
+                <name>小李</name>
+                <age>24</age>
+            </student>
+            <student>
+                <no>1</no>
+                <name>小王</name>
+                <age>24</age>
+            </student>
+        </class>
+    </classes>
+</school>
