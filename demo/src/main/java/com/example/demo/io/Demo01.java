@@ -17,7 +17,7 @@ public class Demo01 {
             // 读取
             int word;
             while ((word = inputStream.read()) != -1) {
-                System.out.print((char) word);
+                System.out.println((char) word);
             }
         } catch (IOException e) {
             e.printStackTrace();
