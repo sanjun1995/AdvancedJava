@@ -1,5 +1,6 @@
 package com.example.demo.algo.zhuan;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -12,14 +13,14 @@ import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 public class ThreadPoolDemo {
     public static void main(String[] args) {
         test();
-        System.gc();
-        System.gc();
     }
 
     private static void test() {
         System.out.println("start");
         ScheduledExecutorService service = newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(() -> System.out.println("service = " + service), 1, 1, TimeUnit.SECONDS);
-        System.out.println ("end");
+        service.scheduleAtFixedRate(() -> System.out.println("Hello World"), 1, 1, TimeUnit.SECONDS);
+        System.out.println("end");
+        System.gc();
+        System.gc();
     }
 }
