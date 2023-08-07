@@ -20,7 +20,9 @@ public class ThreadPoolDemo {
         ScheduledExecutorService service = newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(() -> System.out.println("Hello World"), 1, 1, TimeUnit.SECONDS);
         System.out.println("end");
+        service = null;
         System.gc();
         System.gc();
+        System.out.println(service);
     }
 }
