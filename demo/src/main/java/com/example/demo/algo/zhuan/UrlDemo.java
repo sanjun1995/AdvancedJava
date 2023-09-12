@@ -1,6 +1,7 @@
 package com.example.demo.algo.zhuan;
 
 import org.apache.commons.validator.routines.UrlValidator;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author caozhixin
@@ -8,8 +9,10 @@ import org.apache.commons.validator.routines.UrlValidator;
  */
 public class UrlDemo {
     public static boolean isURL(String str) {
-        UrlValidator validator = new UrlValidator();
-        return validator.isValid(str);
+        UriComponentsBuilder.fromHttpUrl(str).host("").build().toUri();
+        return true;
+//        UrlValidator validator = new UrlValidator();
+//        return validator.isValid(str);
     }
 
     public static void main(String[] args) {
