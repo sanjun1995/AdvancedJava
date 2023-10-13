@@ -156,7 +156,6 @@ public class ReGenToStringMainClazzV2 {
         if (has) {
             parse.addImport("com.common.desensitize.Desensitize");
         }
-
         return parse.toString();
     }
 
