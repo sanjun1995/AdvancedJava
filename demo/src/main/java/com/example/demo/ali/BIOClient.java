@@ -1,30 +1,30 @@
-package com.example.demo.ali;
-
-import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.channels.SocketChannel;
-import java.util.LinkedList;
-import java.util.stream.IntStream;
-
-public class BIOClient {
-    public static void main(String[] args) throws IOException {
-        LinkedList<SocketChannel> clients = new LinkedList<>();
-        InetSocketAddress serverAddr = new InetSocketAddress(9998);
-        IntStream.range(20000, 50000).forEach(i -> {
-            try {
-                SocketChannel client = SocketChannel.open();
-                client.bind(new InetSocketAddress(i));
-                client.connect(serverAddr);
-                System.out.println("client:" + i + " connected");
-                clients.add(client);
-
-            } catch (IOException e) {
-                System.out.println("IOException" + i);
-                e.printStackTrace();
-            }
-        });
-        System.out.println("clients.size: " + clients.size());
-        //阻塞主线程
-        System.in.read();
-    }
-}
+//package com.example.demo.ali;
+//
+//import java.io.IOException;
+//import java.net.InetSocketAddress;
+//import java.nio.channels.SocketChannel;
+//import java.util.LinkedList;
+//import java.util.stream.IntStream;
+//
+//public class BIOClient {
+//    public static void main(String[] args) throws IOException {
+//        LinkedList<SocketChannel> clients = new LinkedList<>();
+//        InetSocketAddress serverAddr = new InetSocketAddress(9998);
+//        IntStream.range(20000, 50000).forEach(i -> {
+//            try {
+//                SocketChannel client = SocketChannel.open();
+//                client.bind(new InetSocketAddress(i));
+//                client.connect(serverAddr);
+//                System.out.println("client:" + i + " connected");
+//                clients.add(client);
+//
+//            } catch (IOException e) {
+//                System.out.println("IOException" + i);
+//                e.printStackTrace();
+//            }
+//        });
+//        System.out.println("clients.size: " + clients.size());
+//        //阻塞主线程
+//        System.in.read();
+//    }
+//}
