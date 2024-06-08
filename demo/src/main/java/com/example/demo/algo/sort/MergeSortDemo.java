@@ -1,5 +1,7 @@
 package com.example.demo.algo.sort;
 
+import java.util.Arrays;
+
 /**
  * 归并排序
  */
@@ -51,10 +53,11 @@ public class MergeSortDemo {
     }
 
     public static void main(String[] args) {
-        int[] a = {21, 25, 14, 8, 3, 63, 77, 44, 66};
-        mergeSort(a, 0, a.length - 1);
-        for (int i = 0; i < a.length; i++) {
-            System.out.print(a[i] + " ");
+        int[] arr = {21, 25, 14, 8, 3, 63, 77, 44, 66};
+        mergeSort(arr, 0, arr.length - 1);
+        int[] temp = Arrays.copyOf(arr, arr.length);
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
         }
     }
 }

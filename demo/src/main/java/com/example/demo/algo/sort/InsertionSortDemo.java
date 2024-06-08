@@ -2,28 +2,61 @@ package com.example.demo.algo.sort;
 
 /**
  * 插入排序
+ * @author caozhixin
  */
 public class InsertionSortDemo {
-    public static void insertSort(int[] arr) {
-        for (int i = 1; i < arr.length; i++) {
-            int temp = arr[i]; //保存当前位置i的元素，其中[0，p - 1]已经有序
-            int j;
-            for (j = i; j > 0; j--) {
-                if (temp < arr[j - 1]) {
-                    arr[j] = arr[j - 1]; //后移一位
-                } else {
-                    break; //如果temp大于前面的事，退出循环，直接插入
-                }
-            }
-            arr[j] = temp; //插入到合适的位置
+    public static void main(String[] args) {
+        int[] arr = {21, 25, 14, 8, 3, 63, 77, 44, 66};
+//        insertionSort(arr);
+        binaryInsertionSort(arr);
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
         }
     }
 
-    public static void main(String[] args) {
-        int[] a = {21, 25, 14, 8, 3, 63, 77, 44, 66};
-        insertSort(a);
-        for (int i = 0; i < a.length; i++) {
-            System.out.print(a[i] + " ");
+    private static void binaryInsertionSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 1; i < n; i++) {
+            int key = arr[i];
+            int left = 0;
+            int right = i - 1;
+            // 使用二分查找找到插入的位置
+            int insertIndex = binarySearch(arr, key, left, right);
+
+            // 将大于key的元素右移
+            for (int j = i - 1; j >= insertIndex; j--) {
+                arr[j + 1] = arr[j];
+            }
+
+            // 插入key
+            arr[insertIndex] = key;
         }
     }
+
+    private static int binarySearch(int[] arr, int key, int left, int right) {
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] == key) {
+                return mid;
+            } else if (arr[mid] < key) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return left;
+    }
+
+//    private static void insertionSort(int[] arr) {
+//        int preIndex, current;
+//        for (int i = 1; i < arr.length; i++) {
+//            preIndex = i - 1;
+//            current = arr[i];
+//            while (preIndex >= 0 && arr[preIndex] > current) {
+//                arr[preIndex + 1] = arr[preIndex];
+//                preIndex--;
+//            }
+//            arr[preIndex + 1] = current;
+//        }
+//    }
 }

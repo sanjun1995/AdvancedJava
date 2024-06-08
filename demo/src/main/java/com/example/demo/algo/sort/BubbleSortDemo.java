@@ -2,19 +2,68 @@ package com.example.demo.algo.sort;
 
 /**
  * 冒泡排序
+ *
+ * @author caozhixin
  */
 public class BubbleSortDemo {
-    public static void bubbleSort(int[] a) {
-        //一次遍历，长度a.length - 1，主要是第一个最终没影响
-        for (int i = 1; i <= a.length - 1; i++) {
-            for (int j = 0; j < a.length - i; j++) {
-                if (a[j] > a[j + 1]) {
-                    int temp = a[j];
-                    a[j] = a[j + 1];
-                    a[j + 1] = temp;
+//    static void bubbleSort(int[] nums) {
+//        int length = nums.length;
+//        for (int i = 0; i < length - 1; i++) {
+//            for (int j = 0; j < length - i - 1; j++) {
+//                if (nums[j] > nums[j + 1]) {
+//                    int tmp = nums[j];
+//                    nums[j] = nums[j + 1];
+//                    nums[j + 1] = tmp;
+//                }
+//            }
+//        }
+//    }
+
+//    public static void bubbleSort(int[] arr) {
+//        int n = arr.length;
+//        for (int i = 0; i < n - 1; i++) {
+//            for (int j = 0; j < n - i - 1; j++) {
+//                if (arr[j] > arr[j + 1]) {
+//                    int temp = arr[j];
+//                    arr[j] = arr[j + 1];
+//                    arr[j + 1] = temp;
+//                }
+//            }
+//        }
+//    }
+
+//    public static void bubbleSort(int[] arr) {
+//        int n = arr.length;
+//        for (int i = 0; i < n - 1; i++) {
+//            boolean swapped = false;
+//            for (int j = 0; j < n - i - 1; j++) {
+//                if (arr[j] > arr[j + 1]) {
+//                    int temp = arr[j];
+//                    arr[j] = arr[j + 1];
+//                    arr[j + 1] = temp;
+//                    swapped = true;
+//                }
+//            }
+//            if (!swapped) {
+//                break;
+//            }
+//        }
+//    }
+
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        int newN;
+        do {
+            newN = 0;
+            for (int i = 1; i < n; i++) {
+                if (arr[i-1] > arr[i]) {
+                    int temp = arr[i -  1];
+                    arr[i - 1] = arr[i];
+                    arr[i] = temp;
+                    newN = i;
                 }
             }
-        }
+        } while (newN != 0);
     }
 
     public static void main(String[] args) {
